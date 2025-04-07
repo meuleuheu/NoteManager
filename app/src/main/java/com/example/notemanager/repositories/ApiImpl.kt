@@ -2,8 +2,9 @@ package com.example.notemanager.repositories
 
 import com.example.notemanager.model.NoteItem
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class ApiImpl: Api {
+class ApiImpl @Inject constructor(): Api {
     var notes = ArrayList<NoteItem>()
 
     override suspend fun login(username: String, password: String): Boolean {

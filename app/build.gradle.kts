@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.animation) //androidx.compose.animation:animation:1.7.8
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
