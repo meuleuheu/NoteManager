@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.notemanager.MainViewModel
+import com.example.notemanager.Screen
 import com.example.notemanager.common.enum.LoadStatus
 
 @Composable
@@ -38,6 +39,7 @@ fun LoginScreen(
             CircularProgressIndicator()
         } else if (state.value.status is LoadStatus.Success) {
             // navigates to Home screen
+            navController.navigate(Screen.Home.route)
         } else {
             if (state.value.status is LoadStatus.Error) {
                 mainViewModel.setError(state.value.status.description)

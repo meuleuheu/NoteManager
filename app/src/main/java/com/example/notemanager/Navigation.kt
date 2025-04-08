@@ -1,10 +1,16 @@
 package com.example.notemanager
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.notemanager.ui.screens.home.HomeScreen
+import com.example.notemanager.ui.screens.home.HomeViewModel
 import com.example.notemanager.ui.screens.login.LoginScreen
 
 sealed class Screen(val route: String) {
@@ -18,10 +24,22 @@ sealed class Screen(val route: String) {
 fun Navigation() {
     val navController = rememberNavController()
     val mainViewModel: MainViewModel = hiltViewModel()
+    val mainState = mainViewModel.uiState.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(mainState.value.error) {
+        if (mainState.value.error != null && mainState.value.error != "") {
+            Toast.makeText(context, mainState.value.error, Toast.LENGTH_LONG).show()
+            mainViewModel.setError("")
+        }
+    }
 
     NavHost(navController = navController, startDestination = Screen.Login.route) {
         composable(Screen.Login.route) {
             LoginScreen(navController, viewModel = hiltViewModel(), mainViewModel = mainViewModel)
+        }
+        composable(Screen.Home.route) {
+            HomeScreen(navController, viewModel = hiltViewModel<HomeViewModel>(), mainViewModel = mainViewModel)
         }
     }
 }
