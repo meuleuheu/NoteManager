@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.notemanager.MainViewModel
+import com.example.notemanager.Screen
 import com.example.notemanager.common.enum.LoadStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +38,7 @@ fun HomeScreen(
     viewModel: HomeViewModel,
     mainViewModel: MainViewModel
 ) {
-    val state = viewModel.userState.collectAsState()    // use by -> error
+    val state = viewModel.uiState.collectAsState()    // use by -> error
 
     // hien thi data
     LaunchedEffect(Unit) {
@@ -68,7 +69,8 @@ fun HomeScreen(
                     items(state.value.notes.size) {idx ->
                         ListItem(
                             modifier = Modifier.clickable {
-                                // navigate
+                                // navigate to Detail screen
+                                navController.navigate("${Screen.Detail.route}?noteIndex=${idx}") // theo index
                             },
                             overlineContent = { Text(text = state.value.notes[idx].dateTime.toString()) },
                             headlineContent = { Text(text = state.value.notes[idx].title) },
