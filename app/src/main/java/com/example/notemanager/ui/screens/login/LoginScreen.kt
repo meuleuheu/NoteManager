@@ -9,6 +9,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +40,9 @@ fun LoginScreen(
             CircularProgressIndicator()
         } else if (state.value.status is LoadStatus.Success) {
             // navigates to Home screen
-            navController.navigate(Screen.Home.route)
+            LaunchedEffect(Unit) {
+                navController.navigate(Screen.Home.route)
+            }
         } else {
             if (state.value.status is LoadStatus.Error) {
                 mainViewModel.setError(state.value.status.description)

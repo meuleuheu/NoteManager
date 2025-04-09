@@ -7,6 +7,12 @@ import javax.inject.Inject
 class ApiImpl @Inject constructor(): Api {
     var notes = ArrayList<NoteItem>()
 
+    init {
+        notes.add(NoteItem(1, "1", "1"))
+        notes.add(NoteItem(2, "2", "2"))
+        notes.add(NoteItem(3, "3", "3"))
+    }
+
     override suspend fun login(username: String, password: String): Boolean {
         delay(1000)
         if (username != "1" || password != "1") {
