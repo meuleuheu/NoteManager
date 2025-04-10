@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.notemanager.ui.screens.addoredit.AddOrEditScreen
 import com.example.notemanager.ui.screens.detail.DetailScreen
 import com.example.notemanager.ui.screens.home.HomeScreen
 import com.example.notemanager.ui.screens.home.HomeViewModel
@@ -62,6 +63,23 @@ fun Navigation() {
                 if (index != null) {
                     DetailScreen(navController, homeViewModel, mainViewModel, index)
                 }
+            }
+        }
+        composable(
+            Screen.AddOrEdit.route + "?noteIndex={noteIndex}",     // ?noteIndex={noteIndex} ko co dau space
+            arguments = listOf(
+                navArgument("noteIndex") {
+                    type = NavType.IntType
+                    defaultValue = -1
+                }
+            )
+        ) {
+            it.arguments?.getInt("noteIndex").let { index ->
+                var parentEntry = remember(it) {
+                    navController.getBackStackEntry(Screen.Home.route)
+                }
+                val homeViewModel: HomeViewModel = hiltViewModel(parentEntry)
+                AddOrEditScreen(navController, homeViewModel, hiltViewModel(), mainViewModel, index!!)
             }
         }
     }

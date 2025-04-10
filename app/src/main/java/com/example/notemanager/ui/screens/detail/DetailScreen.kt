@@ -54,7 +54,7 @@ public fun DetailNote(
             Text("Content : ${state.value.notes[index].content}")
             Box(Modifier.height(10.dp))
             ElevatedButton(onClick = {
-                navController.navigate("${Screen.AddOrEdit.route}/${index}")
+                navController.navigate("${Screen.AddOrEdit.route}?noteIndex=${index}")
             }) {
                 Text("Edit")
             }
