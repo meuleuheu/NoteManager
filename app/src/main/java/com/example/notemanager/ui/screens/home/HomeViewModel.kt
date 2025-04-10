@@ -58,4 +58,8 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun selectNote(index: Int) {
+        _uiState.value = _uiState.value.copy(selectedIndex = index)
+    }
 }

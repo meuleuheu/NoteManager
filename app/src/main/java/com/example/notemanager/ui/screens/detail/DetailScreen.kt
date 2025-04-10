@@ -33,21 +33,30 @@ fun DetailScreen(
         }
     ) {
         Column(modifier = Modifier.fillMaxSize().padding(it)) {
-            val state = viewModel.uiState.collectAsState()
-            if (index >= 0) {
-                Column {
-                    Text("Date time : ${state.value.notes[index].dateTime}")
-                    Box(Modifier.height(10.dp))
-                    Text("Title : ${state.value.notes[index].title}")
-                    Box(Modifier.height(10.dp))
-                    Text("Content : ${state.value.notes[index].content}")
-                    Box(Modifier.height(10.dp))
-                    ElevatedButton(onClick = {
-                        navController.navigate("${Screen.AddOrEdit.route}/${index}")
-                    }) {
-                        Text("Edit")
-                    }
-                }
+            DetailNote(viewModel, index, navController)
+        }
+    }
+}
+
+@Composable
+public fun DetailNote(
+    viewModel: HomeViewModel,
+    index: Int,
+    navController: NavHostController
+) {
+    val state = viewModel.uiState.collectAsState()
+    if (index >= 0) {
+        Column {
+            Text("Date time : ${state.value.notes[index].dateTime}")
+            Box(Modifier.height(10.dp))
+            Text("Title : ${state.value.notes[index].title}")
+            Box(Modifier.height(10.dp))
+            Text("Content : ${state.value.notes[index].content}")
+            Box(Modifier.height(10.dp))
+            ElevatedButton(onClick = {
+                navController.navigate("${Screen.AddOrEdit.route}/${index}")
+            }) {
+                Text("Edit")
             }
         }
     }
